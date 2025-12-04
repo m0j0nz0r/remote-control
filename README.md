@@ -106,12 +106,7 @@ remote-control/
 
 - `GET /api/devices` - List available IR devices
 - `POST /api/send` - Send IR command
-- `GET /api/commands` - Get command history
 - `GET /api/status` - Get LIRC daemon status
-
-## Configuration
-
-Edit `server/config/lirc.config.json` to configure LIRC settings and device mappings.
 
 ## Troubleshooting
 
