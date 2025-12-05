@@ -24,7 +24,9 @@ export interface ServerStatus {
   providedIn: 'root'
 })
 export class RemoteControlService {
-  private apiUrl = 'http://localhost:3000/api';
+  // apiUrl will be determined at runtime so it can target a server IP on the LAN.
+  private apiUrl = '';
+
   private devicesSubject = new BehaviorSubject<IRDevice[]>([]);
   private commandHistorySubject = new BehaviorSubject<CommandEntry[]>([]);
 
@@ -32,6 +34,13 @@ export class RemoteControlService {
   public commandHistory$ = this.commandHistorySubject.asObservable();
 
   constructor(private http: HttpClient) {
+    // Determine server host/port/protocol at runtime.
+    const host = window.location.hostname || 'localhost';
+    const port = '3000';
+    // SERVER_PROTOCOL allows forcing http/https; otherwise use current page protocol.
+    const protocol = window.location.protocol ? window.location.protocol.replace(':', '') : 'http';
+    this.apiUrl = `${protocol}://${host}:${port}/api`;
+
     this.loadDevices();
   }
 
