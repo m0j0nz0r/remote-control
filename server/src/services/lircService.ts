@@ -19,7 +19,7 @@ export class LircService {
 
   getDevices(): IRDevice[] {
     try {
-      const output = execSync('irsend LIST ""').toString();
+      const output = execSync('irsend LIST "" ""').toString();
       return this.parseDevices(output);
     } catch (error) {
       console.error('Error fetching LIRC devices:', error);
