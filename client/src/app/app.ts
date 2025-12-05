@@ -5,6 +5,7 @@ import { IRDevice, RemoteControlService } from './services/remote-control.servic
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     MatGridListModule,
     MatSelectModule,
+    MatButtonModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -22,7 +24,6 @@ import { CommonModule } from '@angular/common';
 export class App {
   constructor(private svc: RemoteControlService) {
   }
-  protected readonly title = signal('client');
   commands: string[] = [];
   devices$!: Observable<IRDevice[]>;
   devices = new FormControl<IRDevice | null>(null);
@@ -35,7 +36,9 @@ export class App {
   sendCommand(command: string) {
     const device = this.devices.value;
     if (device) {
-      this.svc.sendCommand(device.name, command);
+      this.svc.sendCommand(device.name, command).subscribe(response => {
+        console.log('Command sent response:', response);
+      });
     }
   }
 }

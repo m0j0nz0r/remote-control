@@ -68,7 +68,7 @@ export class LircService {
       }
       try {
         execSync(`irsend LIST ${device.name} ""`).toString().split('\n').forEach(cmdLine => {
-          const cmd = cmdLine.trim();
+          const cmd = cmdLine.trim().split(' ')[1];
           if (cmd) {
             device.commands.push(cmd);
           }

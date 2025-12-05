@@ -35,7 +35,7 @@ export class RemoteControlService {
 
   constructor(private http: HttpClient) {
     // Determine server host/port/protocol at runtime.
-    const host = window.location.hostname || 'localhost';
+    const host = '192.168.100.23';
     const port = '3000';
     // SERVER_PROTOCOL allows forcing http/https; otherwise use current page protocol.
     const protocol = window.location.protocol ? window.location.protocol.replace(':', '') : 'http';
@@ -59,6 +59,7 @@ export class RemoteControlService {
   }
 
   sendCommand(device: string, command: string): Observable<any> {
+    console.log(`Sending command ${command} to device ${device}`);
     return this.http.post(`${this.apiUrl}/devices/send`, { device, command }).pipe(
       catchError(error => {
         console.error('Error sending command:', error);
