@@ -1,0 +1,13 @@
+<div class="remote-control">
+  <mat-form-field>
+    <mat-label>Devices</mat-label>
+    <mat-select [formControl]="devices" (selectionChange)="onDeviceChange($event.value)">
+      <mat-option *ngFor="let device of devices$ | async" [value]="device">{{ device.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-grid-list cols="3" rowHeight="100px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let command of commands">
+      <button mat-raised-button color="primary" (click)="sendCommand(command)">{{ command }}</button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
