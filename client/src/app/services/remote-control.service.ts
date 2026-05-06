@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class RemoteControlService {
 
   constructor(private http: HttpClient) {
     // Determine server host/port/protocol at runtime.
-    const host = '192.168.100.23';
+    const host = isDevMode() ? '192.168.100.110' : window.location.hostname;
     const port = '3000';
     // SERVER_PROTOCOL allows forcing http/https; otherwise use current page protocol.
     const protocol = window.location.protocol ? window.location.protocol.replace(':', '') : 'http';
